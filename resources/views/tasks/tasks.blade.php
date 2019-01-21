@@ -4,7 +4,7 @@
             <img class="media-object rounded" src="{{ Gravatar::src($user->email, 50) }}" alt="">
             <div class="media-body ml-3">
                 <div>
-                    {!! link_to_route('users.show', $task->user->name, ['id' => $task->user->id]) !!} <span class="text-muted">posted at {{ $task->created_at }}</span>
+                    {!! link_to_route('tasks.show', $task->user->name, ['id' => $task->user->id]) !!} <span class="text-muted">posted at {{ $task->created_at }}</span>
                 </div>
                 <div>
                     <p>{!! nl2br(e($task->content)) !!}</p>
@@ -20,4 +20,4 @@
         </li>
     @endforeach
 </ul>
-{{ $microposts->render('pagination::bootstrap-4') }}
+{{ $tasks->render('pagination::bootstrap-4') }}

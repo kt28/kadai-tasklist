@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Exports\ItemsExport;
+
 use App\Task;
+use App\Advance;
 
 class TasksController extends Controller
 {
@@ -62,7 +65,7 @@ class TasksController extends Controller
             'content' => 'required|max:191',
         ]);
         
-        $request->user()->tasks()->create([
+        $task = $request->user()->tasks()->create([
             'status' => $request->status,
             'content' => $request->content,
         ]);
@@ -78,15 +81,24 @@ class TasksController extends Controller
      */
     public function show($id)
     {
+        $user = \Auth::user();
         $task = Task::find($id);
+        $advances = $task->advances()->get();
+// dd($advances);
         
+        $data = [
+            'task' => $task,
+            'advances' => $advances,
+        ];
+        
+        $data += $this->counts($user);
+// dd(\Auth::id());
+// dd($task->user_id);
         if (\Auth::id() === $task->user_id) {
-            return view('tasks.show', [
-                'task' => $task,
-            ]);
+            return view('tasks.show', $data);
         }
         else {
-            return redirect('/');
+             return redirect('/');
         }
     }
 
@@ -130,8 +142,12 @@ class TasksController extends Controller
             $task->status = $request->status;
             $task->content = $request->content;
             $task->save();
-        
-            return redirect('/');
+            
+            return redirect()->route(
+                'tasks.show', [
+                    'tasks' => $task,
+                ]
+            );
         }
         else {
             return redirect('/');
@@ -156,5 +172,15 @@ class TasksController extends Controller
         else {
             return redirect('/');
         }
+    }
+    
+    public function copy($id)
+    {
+        $task = Task::find($id)->replicate();;
+        $task->status = 'new';
+        
+        $task->save();
+        
+        return redirect('/');
     }
 }

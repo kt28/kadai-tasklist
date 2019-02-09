@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>id: {{ $task->id }}のタスク編集ページ</h1>
+    <h1>id: {{ $task->id }}の複製タスク作成ページ</h1>
     
     <div class="row">
         <div class="col-6">
@@ -18,11 +18,10 @@
                     {!! Form::text('content', null, ['class' => 'form-control']) !!}
                 </div>
                 
-                {!!Form::submit('更新', ['class' => 'btn btn-primary']) !!}
+                {!!Form::submit('投稿', ['class' => 'btn btn-light']) !!}
                 
             {!! Form::close() !!}
         </div>
     </div>
 
 @endsection
-

@@ -12,4 +12,9 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function advances()
+    {
+        return $this->hasMany(Advance::class);
+    }
 }

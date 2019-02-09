@@ -86,11 +86,18 @@ class AdvancesController extends Controller
             'summary' => 'max:191',
         ]);
         
+        $advance->date = $request->date;
+        $advance->progress = $request->progress;
+        $advance->summary = $request->summary;
+        
         $advance->save();
+        
+        $task = Task::find($id);
 
         return redirect()->route(
             'tasks.show', [
                 'tasks' => $task,
+                
             ]
         );
     }

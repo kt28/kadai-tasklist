@@ -46,7 +46,7 @@
                 @foreach ($advances as $advance)
                
                 <tr>
-                    <td>{{ $advance->confirmed }}</td>
+                    <td><input type="checkbox" name="confirmed" value="confirmed"></td>
                     <td>{{ $advance->date }}</td>
                     <td>{{ $advance->progress }}</td>
                     <td>{{ $advance->summary }}</td>

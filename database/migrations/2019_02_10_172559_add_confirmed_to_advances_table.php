@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdvancesTable extends Migration
+class AddConfirmedToAdvancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -25,6 +25,8 @@ class CreateAdvancesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('confirmed');
+        Schema::table('advances', function (Blueprint $table) {
+            $table->dropColumn('confirmed');
+        });
     }
 }
